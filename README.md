@@ -1,6 +1,6 @@
 # Analysis of Higher Education Dropouts Dynamics through Multilevel Functional Decomposition of Recurrent Events in Counting Processes
 
-This repository contains R demo scripts for the paper
+This repository contains code for reproducing the experiments and examples presented in the accompanying paper
 
 > **Analysis of Higher Education Dropouts Dynamics through Multilevel Functional Decomposition of Recurrent Events in Counting Processes**  
 > [arXiv preprint](https://arxiv.org/abs/2411.13370)
