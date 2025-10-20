@@ -17,11 +17,11 @@ Contains scripts to replicate the simulation experiments described in **Section 
 These experiments assess the performance and robustness of the proposed decomposition model under controlled conditions.
 
 **Files:**
-- `simulation.R` — Main script to run the complete simulation pipeline for different runs over different parameter settings
-- `analysis.R` — Summarizes and visualizes simulation outcomes across simulations
+- `simulation.R` - Main script to run the complete simulation pipeline for different runs over different parameter settings
+- `analysis.R` - Summarizes and visualizes simulation outcomes across simulations
 - `PlotsSimulation.R` - Main functions for plotting the simulation output and reproducing the Figures in Section 3
-- `simulate_once.R` — Runs a single instance of the simulation (one run, for a particular parameter set up) 
-- `utils.R` — Utility functions for `simulate_once.R`
+- `simulate_once.R` - Runs a single instance of the simulation (one run, for a particular parameter set up) 
+- `utils.R` - Utility functions for `simulate_once.R`
 
 ### **2. Case Study (`/Case study`)**
 
@@ -29,8 +29,8 @@ Includes scripts for the empirical analysis presented in **Section 4** of the pa
 The case study focuses on modeling and predicting dropout dynamics in higher education using the proposed methodology.
 
 **Files:**
-- `1_DataPreprocessing.R` — Data cleaning, preparation, and transformation into event-counting format.  
-- `2_FromCompensatorsToPCA.R` — Converts estimated compensator functions into a form suitable for functional PCA.  
-- `3_Prediction.R` — Implements predictive modeling based on extracted functional components.  
-- `4_Bootstrap.R` — Conducts bootstrap analyses for inference and uncertainty quantification.
+- `1_DataPreprocessing.R` - Data cleaning, preparation, and transformation into event-counting format.  
+- `2_FromCompensatorsToPCA.R` - Converts estimated compensator functions into a form suitable for functional PCA.  
+- `3_Prediction.R` - Implements predictive modeling based on extracted functional components.  
+- `4_Bootstrap.R` - Conducts bootstrap analyses for inference and uncertainty quantification.
 
