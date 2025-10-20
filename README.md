@@ -6,7 +6,7 @@ This repository contains code for reproducing the experiments and examples prese
 > [arXiv preprint](https://arxiv.org/abs/2411.13370)
 > by A. Ragni, C. Masci, A. M. Paganoni
 
-# Code Organization
+## Code Organization
 
 The code is organised as follows:
 
