@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -S /bin/bash
+#PBS -l select=1:ncpus=1:mpiprocs=2,walltime=12:00:00
+#PBS -N dropoutsim
+#PBS -j oe
+
+cd ${PBS_O_WORKDIR}
+source /opt/mox/spack_v1/share/spack/setup-env.sh
+spack load r@4.4.1%gcc@12.1.0
+
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+
+Rscript /u/ragni/dropout/simul_dropout.R $I $J $balanced $grid
