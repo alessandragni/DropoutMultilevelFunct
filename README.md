@@ -10,5 +10,6 @@ This repository contains code for reproducing the experiments and examples prese
 
 The code is organised as follows:
 
-- Simulation folder: contains code related to
-- Case study folder: contains code related to
+- *Simulation* folder: contains code related to the simulation study in Section 3;
+    - test
+- *Case study* folder: contains code related to the case study in Section 4;
