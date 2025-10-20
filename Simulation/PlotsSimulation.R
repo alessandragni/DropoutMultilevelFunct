@@ -21,15 +21,15 @@ PLOTLambda = function(hazard, selected_centres, type, add_hat=FALSE){
       ylab = TeX(paste('${\\hat{\\Lambda}}_{ij}(t)$'))
   } 
   
-  hazard$color <- ifelse(!hazard$centre %in% selected_centers, "Others", as.factor(hazard$centre))
-  hazard$linetype <- ifelse(!hazard$centre %in% selected_centers, "Others", as.factor(hazard$centre))
-  hazard$size <- ifelse(!hazard$centre %in% selected_centers, 0.8, 1.2)
+  hazard$color <- ifelse(!hazard$centre %in% selected_centres, "Others", as.factor(hazard$centre))
+  hazard$linetype <- ifelse(!hazard$centre %in% selected_centres, "Others", as.factor(hazard$centre))
+  hazard$size <- ifelse(!hazard$centre %in% selected_centres, 0.8, 1.2)
   hazard$centre <- factor(hazard$centre, levels = as.character(sort(unique(hazard$centre))))
   
-  color_palette <- setNames(c(rgb(0.5,0.5,0.5, alpha = 0.12), colorRampPalette(brewer.pal(3,"Set1"))(length(selected_centers))),
-                            c("Others", as.character(selected_centers)))
-  line_palette <- setNames(c(1, 2:(length(selected_centers)+1)), 
-                           c("Others", as.character(selected_centers)))
+  color_palette <- setNames(c(rgb(0.5,0.5,0.5, alpha = 0.12), colorRampPalette(brewer.pal(3,"Set1"))(length(selected_centres))),
+                            c("Others", as.character(selected_centres)))
+  line_palette <- setNames(c(1, 2:(length(selected_centres)+1)), 
+                           c("Others", as.character(selected_centres)))
   
   PLOT = ggplot(hazard, aes(x= time, y=!!sym(type), group = factor(id), color=color, size=size, 
                      linetype = linetype )) +

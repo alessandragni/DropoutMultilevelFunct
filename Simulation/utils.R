@@ -103,7 +103,7 @@ fit_smooth_Lambda0 <- function(model){
   
   # Smooth version of Lambda0
   Lambda0S <- cobs(c(0,t), c(0,Lambda0), constraint=c("increase"), 
-                   pointwise=matrix(c(0,0,0),nrow=1), nknots=40, lambda=0, toler.kn=0)
+                   pointwise=matrix(c(0,0,0),nrow=1), nknots=50, lambda=0, toler.kn=0)
   
   return(list('times0' = t,
               'Lambda0' = Lambda0,
