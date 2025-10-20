@@ -1,3 +1,5 @@
+# This script imports necessary libraries, runs simulations, and processes results to evaluate and visualize eigenfunctions. 
+# It also saves summary statistics and simulation results to files.
 
 # import libraries
 library(gcmrec)
