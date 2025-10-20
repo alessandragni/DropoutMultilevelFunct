@@ -19,11 +19,15 @@ library(RColorBrewer)
 
 source('simulate_once.R')
 
+#_______________________________________________________________________________
+#### To simulate just 1 run and get Figures 1, 2 and 3 ####
+results <- simulate_once(seed = 1, I = 20, J = 4, grid = 1000, balanced = TRUE, verbose = TRUE)
 
+#_______________________________________________________________________________
+#### To simulate just 1 run and get Figure 4a and 4b ####
 grid = 1000
 results <- lapply(c(1:8, 10:33, 35:38, 40:44, 46:50, 52:67, 69:71, 73:107), 
                   function(s) simulate_once(seed = s, grid = grid))
-
 
 
 df_eval <- do.call(rbind, lapply(seq_along(results), function(i) {
@@ -87,7 +91,7 @@ efun_all <- function(level, k, grid) {
 
 grid_len <- seq(0, 1, length.out =  (grid+1))
 
-# --- Example: Level 1 ---
+# --- Example: Level 1 --- change here to get level2 plot
 level <- "level1"
 efun1 <- efun_all(level, 1, grid_len)
 efun2 <- efun_all(level, 2, grid_len)
@@ -159,6 +163,9 @@ print(PLOT)
 
 ggsave(paste0("Plots/EigenFunL",level,"POST_MANY.pdf"), width = 8, height = 4, units = "in", device = "pdf")
 
+
+#_______________________________________________________________________________
+#### To simulate over many cases and 100 runs each and get MISE (for Table 1) ####
 
 # example
 # I = 10 

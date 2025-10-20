@@ -1,9 +1,8 @@
-# Implement simulation function for generating data with specified parameters and eigenfunctions.
-
-simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
+simulate_once <- function(seed, I = 20, J = 4, grid = 1000, 
+                          balanced = TRUE, verbose = FALSE) {
   
   source("utils.R")
-
+  
   set.seed(1)
   I = I # groups 20
   J = J # units 4
@@ -11,7 +10,7 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
   level = 0.1
   sigma = 0
   balanced = balanced # TRUE
-
+  
   
   # Create an empty data frame to store the simulated times
   simulated_data = data.frame()
@@ -86,7 +85,7 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
                si1[m, 3] * ef13(tt) + si1[m, 4] * ef14(tt)
       )
     }
-
+    
     for (j in 1:J_subj[m]) {
       eff_J = function(tt, m, j){
         return(si2[J_ind[m]+j, 1] * ef21(tt) + si2[J_ind[m]+j, 2] * ef22(tt) + 
@@ -129,6 +128,14 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
     centre = rep(rep(1:I, times = J_subj), each = grid + 1)
   )
   
+  if(verbose){
+    selected_centres <-c(14, 17, 20) # c(1, 16, 17, 18) 
+    
+    source('PlotsSimulation.R')
+    PLOTLambda(df, selected_centres, 'intensity')
+    PLOTLambda(df, selected_centres, 'cumhaz')
+    
+  }
   
   # LET'S DO FPCA on Lambdas 
   res <- mfpca.face(Y = Lambdas, 
@@ -138,6 +145,34 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
   res0 = res
   res$evalues
   res$npc
+  
+  if(verbose){
+    COEFF = 3
+    
+    # Create a data frame for ggplot
+    plot_data <- data.frame(x = seq_along(res$mu)/1000, 
+                            y = res$mu, 
+                            C1L1 = res$efunctions$level1[,1],
+                            C2L1 = res$efunctions$level1[,2],
+                            C1L2 = res$efunctions$level2[,1],
+                            C2L2 = res$efunctions$level2[,2],
+                            posC1L1 = res$mu + res$efunctions$level1[, 1] * COEFF * sqrt(res$evalues$level1[1]), 
+                            negC1L1 = res$mu - res$efunctions$level1[, 1] * COEFF * sqrt(res$evalues$level1[1]),
+                            posC2L1 = res$mu + res$efunctions$level1[, 2] * COEFF * sqrt(res$evalues$level1[1]), 
+                            negC2L1 = res$mu - res$efunctions$level1[, 2] * COEFF * sqrt(res$evalues$level1[1]),
+                            posC1L2 = res$mu + res$efunctions$level2[, 1] * COEFF * sqrt(res$evalues$level2[1]),
+                            negC1L2 = res$mu - res$efunctions$level2[, 1] * COEFF * sqrt(res$evalues$level2[1]),
+                            posC2L2 = res$mu + res$efunctions$level2[, 2] * COEFF * sqrt(res$evalues$level2[1]),
+                            negC2L2 = res$mu - res$efunctions$level2[, 2] * COEFF * sqrt(res$evalues$level2[1]))
+    
+    PlotEigenFunMFPCA(plot_data, level = 1)
+    PlotEigenFunMFPCA(plot_data, level = 2)
+    
+    PlotCompMFPCA(plot_data, level = 1, component = 1, coeff = COEFF)
+    PlotCompMFPCA(plot_data, level = 1, component = 2, coeff = COEFF)
+    PlotCompMFPCA(plot_data, level = 2, component = 1, coeff = COEFF)
+    PlotCompMFPCA(plot_data, level = 2, component = 2, coeff = COEFF)
+  }
   
   
   # Adding a last row with time = 1.001 for each combination of id and centre
@@ -192,8 +227,8 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
   t_max <- grid
   times <- seq(0,t_max,by=1)
   
-  #count_model = coxph(Surv(start,stop,event) ~ 1 + enum, id=id, cluster=centre, data = simulated_data)
   count_model = coxph(Surv(start,stop,event) ~ 1 + enum, id=id, cluster=id, data = simulated_data)
+  #count_model = coxph(Surv(start,stop,event) ~ 1 + enum, id=id, cluster=centre, data = simulated_data)
   summary(count_model)
   
   
@@ -202,9 +237,13 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
   cumulative_hazard = compute_cumulative_hazard(model = count_model,
                                                 sel_df = as.data.table(simulated_data),
                                                 smoothed_baseline = bashaz$Lambda0S,
-                                                  times, verbose = FALSE)
+                                                times, verbose = FALSE)
   cumulative_hazard = as.data.frame(cumulative_hazard)
   cumulative_hazard$time = cumulative_hazard$time / grid
+  
+  if(verbose){
+    PLOTLambda(cumulative_hazard, selected_centres, 'cumhaz', add_hat = TRUE)
+  }
   
   
   reformat_cumhaz = function(cumulative_hazard){
@@ -221,7 +260,7 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
   }
   
   df = reformat_cumhaz(cumulative_hazard)
-
+  
   
   res <- mfpca.face(Y = df$cumhaz, 
                     id = df$centre,
@@ -232,7 +271,35 @@ simulate_once <- function(seed, I = 20, J = 4, grid = 1000, balanced = TRUE) {
   res$evalues
   # Assuming 'res' is your data frame
   
-
+  if(verbose){
+    COEFF = 3
+    
+    # Create a data frame for ggplot
+    plot_data <- data.frame(x = seq_along(res$mu)/1000, 
+                            y = res$mu, 
+                            C1L1 = res$efunctions$level1[,1],
+                            C2L1 = res$efunctions$level1[,2],
+                            C1L2 = res$efunctions$level2[,1],
+                            C2L2 = res$efunctions$level2[,2],
+                            posC1L1 = res$mu + res$efunctions$level1[, 1] * COEFF * sqrt(res$evalues$level1[1]), 
+                            negC1L1 = res$mu - res$efunctions$level1[, 1] * COEFF * sqrt(res$evalues$level1[1]),
+                            posC2L1 = res$mu + res$efunctions$level1[, 2] * COEFF * sqrt(res$evalues$level1[1]), 
+                            negC2L1 = res$mu - res$efunctions$level1[, 2] * COEFF * sqrt(res$evalues$level1[1]),
+                            posC1L2 = res$mu + res$efunctions$level2[, 1] * COEFF * sqrt(res$evalues$level2[1]),
+                            negC1L2 = res$mu - res$efunctions$level2[, 1] * COEFF * sqrt(res$evalues$level2[1]),
+                            posC2L2 = res$mu + res$efunctions$level2[, 2] * COEFF * sqrt(res$evalues$level2[1]),
+                            negC2L2 = res$mu - res$efunctions$level2[, 2] * COEFF * sqrt(res$evalues$level2[1]))
+    
+    PlotEigenFunMFPCA(plot_data, level = 1, post = TRUE)
+    PlotEigenFunMFPCA(plot_data, level = 2, post = TRUE)
+    
+    PlotCompMFPCA(plot_data, level = 1, component = 1, post = TRUE, coeff = COEFF)
+    PlotCompMFPCA(plot_data, level = 1, component = 2, post = TRUE, coeff = COEFF)
+    PlotCompMFPCA(plot_data, level = 2, component = 1, post = TRUE, coeff = COEFF)
+    PlotCompMFPCA(plot_data, level = 2, component = 2, post = TRUE, coeff = COEFF)
+  }
+  
+  
   # Example for your levels
   MISE2_eigen1 <- compute_MISE(res0$efunctions[[1]], res$efunctions[[1]], grid)
   MISE2_eigen2 <- compute_MISE(res0$efunctions[[2]], res$efunctions[[2]], grid)
