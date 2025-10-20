@@ -18,7 +18,8 @@ These experiments assess the performance and robustness of the proposed decompos
 
 **Files:**
 - `simulation.R` — Main script to run the complete simulation pipeline for different runs over different parameter settings
-- `analysis.R` — Summarizes and visualizes simulation outcomes
+- `analysis.R` — Summarizes and visualizes simulation outcomes across simulations
+- `PlotsSimulation.R` - Main functions for plotting the simulation output and reproducing the Figures in Section 3
 - `simulate_once.R` — Runs a single instance of the simulation (one run, for a particular parameter set up) 
 - `utils.R` — Utility functions for `simulate_once.R`
 
