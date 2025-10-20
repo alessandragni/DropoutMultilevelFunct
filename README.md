@@ -11,5 +11,12 @@ This repository contains code for reproducing the experiments and examples prese
 The code is organised as follows:
 
 - *Simulation* folder: contains code related to the simulation study in Section 3;
-    - test
+    - simulation.R
+    - analysis.R
+    - simulate_once.R
+    - utils.R
 - *Case study* folder: contains code related to the case study in Section 4;
+    - 1_DataPreprocessing.R
+    - 2_FromCompensatorsToPCA.R
+    - 3_Prediction.R
+    - 4_Bootstrap.R
