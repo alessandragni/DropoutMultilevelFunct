@@ -14,7 +14,7 @@ The repository is divided into two main components, corresponding to the **simul
 ### **1. Simulation Study (`/Simulation`)**
 
 Contains scripts to replicate the simulation experiments described in **Section 3** of the paper.  
-These experiments assess the performance and robustness of the proposed decomposition model under controlled conditions.
+These experiments assess the performance and robustness of the proposed methodology under controlled conditions.
 
 **Files:**
 - `simulation.R` - Main script to run the complete simulation pipeline for different runs over different parameter settings
@@ -23,14 +23,14 @@ These experiments assess the performance and robustness of the proposed decompos
 - `simulate_once.R` - Runs a single instance of the simulation (one run, for a particular parameter set up) 
 - `utils.R` - Utility functions for `simulate_once.R`
 
-### **2. Case Study (`/Case study`)**
+### **2. Case Study (`/CaseStudy`)**
 
 Includes scripts for the empirical analysis presented in **Section 4** of the paper.  
 The case study focuses on modeling and predicting dropout dynamics in higher education using the proposed methodology.
 
 **Files:**
-- `1_DataPreprocessing.R` - Data cleaning, preparation, and transformation into event-counting format.  
-- `2_FromCompensatorsToPCA.R` - Converts estimated compensator functions into a form suitable for functional PCA.  
-- `3_Prediction.R` - Implements predictive modeling based on extracted functional components.  
-- `4_Bootstrap.R` - Conducts bootstrap analyses for inference and uncertainty quantification.
+- `1_FromCompensatorsToPCA.R` - From data into event-counting format, to estimated compensator functions into a form suitable for functional PCA.  
+- `2_Prediction.R` - Implements predictive modeling based on extracted functional components.  
+- `PlotsSimulation.R` - Main functions for plotting the case study output and reproducing the Figures in Section 4
+
 

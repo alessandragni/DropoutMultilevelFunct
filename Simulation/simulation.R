@@ -92,7 +92,7 @@ efun_all <- function(level, k, grid) {
 grid_len <- seq(0, 1, length.out =  (grid+1))
 
 # --- Example: Level 1 --- change here to get level2 plot
-level <- "level1"
+level <- "level2"
 efun1 <- efun_all(level, 1, grid_len)
 efun2 <- efun_all(level, 2, grid_len)
 
