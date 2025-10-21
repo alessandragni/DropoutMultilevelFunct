@@ -29,8 +29,8 @@ Includes scripts for the empirical analysis presented in **Section 4** of the pa
 The case study focuses on modeling and predicting dropout dynamics in higher education using the proposed methodology.
 
 **Files:**
-- `1_FromCompensatorsToPCA.R` - From data into event-counting format, to estimated compensator functions into a form suitable for functional PCA.  
-- `2_Prediction.R` - Implements predictive modeling based on extracted functional components.  
+- `1_FromCompensatorsToPCA.R` - From data into event-counting format, to estimated compensator functions into a form suitable for functional PCA  
+- `2_Prediction.R` - Implements predictive modeling based on extracted functional compensators
 - `PlotsSimulation.R` - Main functions for plotting the case study output and reproducing the Figures in Section 4
 
 
