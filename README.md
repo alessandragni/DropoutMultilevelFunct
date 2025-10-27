@@ -31,6 +31,7 @@ The case study focuses on modeling and predicting dropout dynamics in higher edu
 **Files:**
 - `1_FromCompensatorsToPCA.R` - From data into event-counting format, to estimated compensator functions into a form suitable for functional PCA.  
 - `2_Prediction.R` - Implements predictive modeling based on extracted functional components.  
-- `PlotsSimulation.R` - Main functions for plotting the case study output and reproducing the Figures in Section 4
+- `3_Bootstrap.R` - Implements nonparametric bootstrap to put the result on the real data into perspective.
+- `PlotsSimulation.R` - Main functions for plotting the case study output and reproducing the Figures in Section 4.
 
 
