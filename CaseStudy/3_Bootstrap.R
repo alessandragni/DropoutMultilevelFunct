@@ -69,6 +69,14 @@ for(b in 1:1000){
   # Convert dates to Date objects
   df$dropout_date <- as.Date(df$stud_career_end_date, format = "%Y-%m-%d") 
   
+  df_list <- split(df, df$stud_career_degree_code_CdS)
+  # Sample from each group WITH replacement
+  df_boot_list <- lapply(df_list, function(subdf) {
+    subdf[sample(1:nrow(subdf), size = nrow(subdf), replace = TRUE), ]
+  })
+  
+  df_boot <- do.call(rbind, df_boot_list)
+  df = df_boot
   
   # Create the dataframe dropout_data
   dropout_data <- df %>% 
